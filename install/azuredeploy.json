@@ -227,7 +227,7 @@
       }
     },
         {
-            "name": "OpenEMR/docker",
+            "name": "Proxy/script",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2019-07-01",
             "location": "[resourceGroup().location]",
@@ -244,7 +244,7 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "https://raw.githubusercontent.com/matthansen0/azure-openemr/main/all-in-one/install.sh"
+                        "https://raw.githubusercontent.com/matthansen0/azure-gatesentry-proxy/main/install/install.sh"
                     ]
                 },
                 "protectedSettings": {

@@ -15,7 +15,7 @@ This template will deploy the following components:
 
 You can login to the admin portal of GateSentry by going to http://IP-address-of-Linux-VM:10786 and logging in using the default credentials of "admin/admin".
 
-### To be added
+### Still in development
 
 - Windows Server 2016 Client VM
 - Azure Bastion Service used to connect to the servers
