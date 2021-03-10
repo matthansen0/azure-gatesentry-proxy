@@ -1,4 +1,4 @@
-# GateSentry on Azure
+# GateSentry Proxy on Azure
 
 This repository contains automation to deploy [GateSentry Proxy](https://gatesentryfilter.abdullahirfan.com/) on Azure.
 
@@ -13,7 +13,9 @@ This template will deploy the following components:
 
 - Ubuntu 18.04 VM with GateSentry Proxy Installed
 
-You can login to the admin portal of GateSentry by going to http://IP-address-of-Linux-VM:10786 and logging in using the default credentials of "admin/admin".
+Set the proxy server of any VM to ``ip-address-of-linux-vm:10413`` to start using the proxy.
+
+You can login to the admin portal of GateSentry by going to ``http://IP-address-of-Linux-VM:10786`` and logging in using the default credentials of ``"admin/admin"``.
 
 ### Still in development
 
