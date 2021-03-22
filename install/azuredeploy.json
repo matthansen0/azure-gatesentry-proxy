@@ -82,11 +82,11 @@
       },
         "winServerUsername": {
             "type": "string",
-            "defaultValue": "AzureUser"
+            "defaultValue": ""
         },
       "winServerPassword": {
         "type": "securestring",
-        "defaultValue": " "
+        "defaultValue": ""
       }
     },
     "variables": {
