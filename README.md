@@ -12,7 +12,7 @@ This repository contains automation to deploy [GatesEntry Proxy](https://gatesen
 This template will deploy the following components:
 
 - Ubuntu 18.04 VM with GatesEntry Proxy Installed
-- Windows 2016 Server with a configured Proxy.
+- Windows 2019 Server with a configured Proxy.
 
 You can login to the admin portal of GateSentry by going to ``http://10.1.0.5:10786`` and using the default credentials of ``"admin/admin"``.
 
