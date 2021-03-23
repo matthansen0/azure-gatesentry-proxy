@@ -425,15 +425,5 @@
 }
       ]
             }
-    ],
-    "outputs": {
-      "adminUsername": {
-        "type": "string",
-        "value": "[parameters('adminUsername')]"
-      },
-      "hostname": {
-        "type": "string",
-        "value": "[parameters('proxyVmName')]"
-      }
-    }
+    ]
   }
