@@ -65,7 +65,7 @@
         "type": "string",
         "defaultValue": "",
         "metadata": {
-          "description": "Unique Public IP DNS Label for the Windows VM"
+          "description": "Unique Public IP DNS Label for the Windows VM eg. dnsclient1234"
         }
       },
       "winOSVersion": {
