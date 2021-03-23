@@ -1,6 +1,6 @@
 # GateSentry Proxy on Azure
 
-This repository contains automation to deploy [GateSentry Proxy](https://gatesentryfilter.abdullahirfan.com/) on Azure.
+This repository contains automation to deploy [GatesEntry Proxy](https://gatesentryfilter.abdullahirfan.com/) on Azure.
 
 ## Deployment
 
@@ -14,14 +14,7 @@ This template will deploy the following components:
 - Ubuntu 18.04 VM with GatesEntry Proxy Installed
 - Windows 2016 Server with a configured Proxy.
 
-You can login to the admin portal of GateSentry by going to ``http://10.1.0.10:10786`` and logging in using the default credentials of ``"admin/admin"``.
-
-### Still in development
-
-- Windows Server 2016 Client VM
-- Azure Bastion Service used to connect to the servers
-
-The automated install will download the certificate from GateSentry and install it in the trusted root store on the Windows VM, and then configure the proxy settings on the Windows VM).
+You can login to the admin portal of GateSentry by going to ``http://10.1.0.5:10786`` and logging in using the default credentials of ``"admin/admin"``.
 
 ## Contributing
 

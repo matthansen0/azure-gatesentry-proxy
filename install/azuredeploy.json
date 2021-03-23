@@ -417,9 +417,9 @@
       "autoUpgradeMinorVersion":true,
       "settings": {
         "fileUris": [
-          "https://raw.githubusercontent.com/matthansen0/azure-gatesentry-proxy/main/install/proxyclient.ps1"
+          "https://raw.githubusercontent.com/matthansen0/azure-gatesentry-proxy/main/install/proxyconfig.ps1"
         ],
-        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File proxyclient.ps1"
+        "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File proxyconfig.ps1"
       }
   }
 }
