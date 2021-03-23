@@ -2,17 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-      "proxyVmName": {
+      "proxyAdminUsername": {
         "type": "string",
-        "defaultValue": "Proxy",
+        "defaultValue": "azureuser",
         "metadata": {
-          "description": "The name of you Virtual Machine."
-        }
-      },
-      "adminUsername": {
-        "type": "string",
-        "metadata": {
-          "description": "Username for the Virtual Machine."
+          "description": "Username for the Proxy Virtual Machine."
         }
       },
       "authenticationType": {
@@ -59,27 +53,6 @@
           "description": "The size of the VM"
         }
       },
-      "virtualNetworkName": {
-        "type": "string",
-        "defaultValue": "vNet",
-        "metadata": {
-          "description": "Name of the VNET"
-        }
-      },
-      "subnetName": {
-        "type": "string",
-        "defaultValue": "Subnet",
-        "metadata": {
-          "description": "Name of the subnet in the virtual network"
-        }
-      },
-      "networkSecurityGroupName": {
-        "type": "string",
-        "defaultValue": "SecGroupNet",
-        "metadata": {
-          "description": "Name of the Network Security Group"
-        }
-      },
         "winServerUsername": {
             "type": "string",
             "defaultValue": "azureuser"
@@ -94,23 +67,33 @@
         "metadata": {
           "description": "Unique Public IP DNS Label for the Windows VM"
         }
+      },
+      "winOSVersion": {
+        "type": "string",
+        "defaultValue": "2019-Datacenter",
+        "metadata": {
+          "description": "OS Version of Windows Server"
+        }
       }
     },
     "variables": {
-      "networkInterfaceName": "[concat(parameters('proxyVmName'),'NetInt')]",
-      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
+      "networkInterfaceName": "[concat(variables('proxyVmName'),'NetInt')]",
+      "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]",
       "osDiskType": "Standard_LRS",
       "networkSecurityGroupName": "SecGroupNet",
+      "virtualNetworkName": "vNet",
+      "subnetName": "Subnet",
       "subnetAddressPrefix": "10.1.0.0/24",
       "addressPrefix": "10.1.0.0/16",
       "proxyIP": "10.1.0.5",
       "winIP": "10.1.0.10",
+      "proxyVmName": "Proxy",
       "linuxConfiguration": {
         "disablePasswordAuthentication": true,
         "ssh": {
           "publicKeys": [
             {
-              "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+              "path": "[concat('/home/', parameters('proxyAdminUsername'), '/.ssh/authorized_keys')]",
               "keyData": "[parameters('adminPasswordOrKey')]"
             }
           ]
@@ -124,8 +107,8 @@
         "name": "[variables('networkInterfaceName')]",
         "location": "[parameters('location')]",
         "dependsOn": [
-          "[resourceId('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
-          "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+          "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
+          "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
         ],
         "properties": {
           "ipConfigurations": [
@@ -141,14 +124,14 @@
             }
           ],
           "networkSecurityGroup": {
-            "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('networkSecurityGroupName'))]"
+            "id": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('networkSecurityGroupName'))]"
           }
         }
       },
       {
         "type": "Microsoft.Network/networkSecurityGroups",
         "apiVersion": "2020-06-01",
-        "name": "[parameters('networkSecurityGroupName')]",
+        "name": "[variables('networkSecurityGroupName')]",
         "location": "[parameters('location')]",
         "properties": {
           "securityRules": [
@@ -184,7 +167,7 @@
       {
         "type": "Microsoft.Network/virtualNetworks",
         "apiVersion": "2020-06-01",
-        "name": "[parameters('virtualNetworkName')]",
+        "name": "[variables('virtualNetworkName')]",
         "location": "[parameters('location')]",
         "properties": {
           "addressSpace": {
@@ -194,7 +177,7 @@
           },
           "subnets": [
             {
-              "name": "[parameters('subnetName')]",
+              "name": "[variables('subnetName')]",
               "properties": {
                 "addressPrefix": "[variables('subnetAddressPrefix')]",
                 "privateEndpointNetworkPolicies": "Enabled",
@@ -207,7 +190,7 @@
       {
         "type": "Microsoft.Compute/virtualMachines",
         "apiVersion": "2020-06-01",
-        "name": "[parameters('proxyVmName')]",
+        "name": "[variables('proxyVmName')]",
         "location": "[parameters('location')]",
         "dependsOn": [
           "[resourceId('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
@@ -238,8 +221,8 @@
             ]
           },
           "osProfile": {
-            "computerName": "[parameters('proxyVmName')]",
-            "adminUsername": "[parameters('adminUsername')]",
+            "computerName": "[variables('proxyVmName')]",
+            "adminUsername": "[parameters('proxyAdminUsername')]",
             "adminPassword": "[parameters('adminPasswordOrKey')]",
             "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'password'), json('null'), variables('linuxConfiguration'))]"
           }
@@ -254,7 +237,7 @@
                   "displayName": "proxy install script"
               },
               "dependsOn": [
-                  "[parameters('proxyVmName')]"
+                  "[variables('proxyVmName')]"
               ],
               "properties": {
                   "publisher": "Microsoft.Azure.Extensions",
@@ -329,8 +312,8 @@
             "apiVersion": "2019-11-01",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
             ],
             "tags": {
                 "displayName": "winServer Network Interface"
@@ -378,7 +361,7 @@
                     "imageReference": {
                         "publisher": "MicrosoftWindowsServer",
                         "offer": "WindowsServer",
-                        "sku": "2019-Datacenter",
+                        "sku": "[parameters('winOSVersion')]",
                         "version": "latest"
                     },
                     "osDisk": {
