@@ -14,7 +14,7 @@ This template will deploy the following components:
 - Ubuntu 18.04 VM with GatesEntry Proxy Installed
 - Windows 2016 Server with a configured Proxy.
 
-You can login to the admin portal of GateSentry by going to ``http://IP-address-of-Linux-VM:10786`` and logging in using the default credentials of ``"admin/admin"``.
+You can login to the admin portal of GateSentry by going to ``http://10.1.0.10:10786`` and logging in using the default credentials of ``"admin/admin"``.
 
 ### Still in development
 
