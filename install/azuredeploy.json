@@ -82,22 +82,29 @@
       },
         "winServerUsername": {
             "type": "string",
-            "defaultValue": ""
+            "defaultValue": "azureuser"
         },
       "winServerPassword": {
         "type": "securestring",
         "defaultValue": ""
+      },
+      "winPublicDNSLabel": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+          "description": "Public IP DNS Label for the Windows VM"
+        }
       }
     },
     "variables": {
       "networkInterfaceName": "[concat(parameters('proxyVmName'),'NetInt')]",
       "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
       "osDiskType": "Standard_LRS",
+      "networkSecurityGroupName": "SecGroupNet",
       "subnetAddressPrefix": "10.1.0.0/24",
       "addressPrefix": "10.1.0.0/16",
       "proxyIP": "10.1.0.5",
       "winIP": "10.1.0.10",
-      "winNetworkInterfaceName": "winSrvNIC1",
       "linuxConfiguration": {
         "disablePasswordAuthentication": true,
         "ssh": {
@@ -288,7 +295,7 @@
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
-                    "domainNameLabel": "[toLower('winServer')]"
+                    "domainNameLabel": "[parameters('winPublicDNSLabel')]"
                 }
             }
         },
