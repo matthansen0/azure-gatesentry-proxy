@@ -1,6 +1,6 @@
 # GateSentry Proxy on Azure
 
-This repository contains automation to deploy [GatesEntry Proxy](https://gatesentryfilter.abdullahirfan.com/) on Azure.
+This repository contains automation to deploy [GatesEntry Proxy](https://gatesentryfilter.abdullahirfan.com/) on Azure. Troubleshooting environments which use proxies can be difficult, and the goal of this project is to allow you to deploy a "proxy lab" environment to test any applications or configurations with the use of a proxy server.
 
 ## Deployment
 
